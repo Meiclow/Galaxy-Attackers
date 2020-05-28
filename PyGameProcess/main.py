@@ -200,7 +200,7 @@ game_intro()
 game_map.is_endless = menu()
 pygame.display.set_mode(size, pygame.FULLSCREEN)
 if not game_map.is_endless:
-    for i in range(9):
+    for i in range(9, 10):
         if game_on:
             game_map.difficulty = i
             success = False
