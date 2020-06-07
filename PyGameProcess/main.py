@@ -1,6 +1,5 @@
 import pygame
 import pymongo
-from easygui import *
 
 from GameObjects.Position import Position
 from GameObjects.Player import Player
@@ -278,5 +277,7 @@ else:
             else:
                 level_over("You lost on endless ")
                 name = get_name()
+                score = game_map.score
+                add_score(score)
 
 game_outro()
