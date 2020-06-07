@@ -281,7 +281,6 @@ def display_scores():
 
 # START OF THE GAME CODE
 game_on = True
-display_scores()
 game_intro()
 game_map.is_endless = menu()
 pygame.display.set_mode(size, pygame.FULLSCREEN)
