@@ -29,7 +29,7 @@ player_position = Position(player_rect.centerx, player_rect.centery)
 
 
 class Map:
-    def __init__(self, screen, is_endless, difficulty, model):
+    def __init__(self, screen, is_endless, difficulty, model, score):
         self.x = size[0]
         self.y = size[1]
         self.difficulty = difficulty
@@ -58,10 +58,12 @@ class Map:
         self.score_size = score_size
         self.mobs = []
         self.init_mobs()
+        self.score = score
 
     def ascend(self):
-        newMap = Map(self.screen, True, self.difficulty + 1, self.player_model)
-        self.__dict__.update(newMap.__dict__)
+        new_score = self.score + ((100 * self.difficulty) * (10 + 3 * self.player.hp))
+        new_map = Map(self.screen, True, self.difficulty + 1, self.player_model, new_score)
+        self.__dict__.update(new_map.__dict__)
 
     def init_barriers(self):
         for i in range(1, 8):

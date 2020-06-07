@@ -1,5 +1,6 @@
 import pygame
 import pymongo
+from easygui import *
 
 from GameObjects.Position import Position
 from GameObjects.Player import Player
@@ -7,14 +8,18 @@ from GameObjects.Map import Map
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client["galaxy-attackers"]
-movies_col = db["movies"]
+highscores_col = db["highscores"]
+title = "Galaxy Attackers"
+title_up = "GALAXY ATTACKERS"
+
+name = enterbox("Enter nick:", title)
 
 pygame.init()
 size = (1200, 900)
 screen = pygame.display.set_mode(size)
 model = 0
-game_map = Map(screen=screen, is_endless=False, model=model, difficulty=0)
-pygame.display.set_caption("Galaxy Attackers", "Galaxy Attackers")
+game_map = Map(screen, False, 0, model, 0)
+pygame.display.set_caption(title, title)
 pygame.display.set_icon(pygame.transform.scale(pygame.image.load("ufo (1).png"), (16, 16)))
 player_position = Position(game_map.player_rect.centerx, game_map.player_rect.centery)
 player = Player.spawn(player_position, model)
@@ -23,7 +28,7 @@ clock = pygame.time.Clock()
 
 
 def reset(current_map):
-    new_map = Map(screen=current_map.screen, difficulty=current_map.difficulty, model=model, is_endless=False)
+    new_map = Map(current_map.screen, False, current_map.difficulty, model, 0)
     new_map.set_player(Player.spawn(player_position, model))
     return new_map
 
@@ -43,7 +48,7 @@ def game_intro():
                     game_on = False
                 intro = False
         text_font_1 = pygame.font.Font("freesansbold.ttf", 64)
-        text_1 = text_font_1.render("GALAXY ATTACKERS", True, (255, 255, 255))
+        text_1 = text_font_1.render(title_up, True, (255, 255, 255))
         text_1_rect = text_1.get_rect()
         text_1_rect.center = (size[0] / 2, size[1] / 2 - 40)
         text_font_2 = pygame.font.Font("freesansbold.ttf", 32)
@@ -114,7 +119,7 @@ def game_outro():
             if event.type == pygame.KEYDOWN:
                 game_not_over = False
         text_font_1 = pygame.font.Font("freesansbold.ttf", 64)
-        text_1 = text_font_1.render("GALAXY ATTACKERS", True, (255, 255, 255))
+        text_1 = text_font_1.render(title_up, True, (255, 255, 255))
         text_1_rect = text_1.get_rect()
         text_1_rect.center = (size[0] / 2, size[1] / 2 - 40)
         text_font_2 = pygame.font.Font("freesansbold.ttf", 32)
@@ -205,7 +210,7 @@ game_intro()
 game_map.is_endless = menu()
 pygame.display.set_mode(size, pygame.FULLSCREEN)
 if not game_map.is_endless:
-    for i in range(9, 10):
+    for i in range(10):
         if game_on:
             game_map.difficulty = i
             success = False
@@ -220,7 +225,7 @@ if not game_map.is_endless:
                     else:
                         level_over("You lost ")
 else:
-    game_map = Map(screen=screen, is_endless=True, model=model, difficulty=0)
+    game_map = Map(screen, True, 0, model, 0)
     game_map.set_player(player)
     endless_win = True
     while endless_win and game_on:
