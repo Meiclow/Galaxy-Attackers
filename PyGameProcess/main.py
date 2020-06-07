@@ -243,6 +243,37 @@ def game():
         pygame.display.update()
     return win
 
+def display_scores():
+    global game_on
+    while game_on:
+        screen.fill((0, 0, 0))
+
+        text_font_1 = pygame.font.Font("freesansbold.ttf", 32)
+        text_1 = text_font_1.render("TOP SCORES", True, (255, 255, 255))
+        text_1_rect = text_1.get_rect()
+        text_1_rect.center = (size[0] / 2, 64)
+
+        scores_font = pygame.font.Font("freesansbold.ttf", 24)
+        scores_cursor = get_top_ten()
+        for i, score in enumerate(scores_cursor):
+            if i == 10:
+                break
+            name = scores_font.render(score["username"], True, (255, 255, 255))
+            s = scores_font.render(score["score"], True, (255, 255, 255))
+            name_rect = name.get_rect()
+            score_rect = s.get_rect()
+            heigt = (size[1] - 64)/10*i + 64
+            name_rect.top = heigt
+            score_rect.top = heigt
+            name_rect.left = 64
+            score_rect.right = 64
+            screen.blit(name, name_rect)
+            screen.blit(s, score_rect)
+
+        screen.blit(text_1, text_1_rect)
+        pygame.display.update()
+
+
 
 # START OF THE GAME CODE
 game_on = True
@@ -279,5 +310,7 @@ else:
                 name = get_name()
                 score = game_map.score
                 add_score(score)
+    if game_on:
+        display_scores()
 
 game_outro()
