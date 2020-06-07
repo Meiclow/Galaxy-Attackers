@@ -64,7 +64,7 @@ def add_score(score):
 
 
 def get_top_ten():
-    return highscores_col.find({}).sort({"score"}, pymongo.DESCENDING)
+    return highscores_col.find().sort("score", pymongo.DESCENDING)
 
 
 def reset(current_map):
