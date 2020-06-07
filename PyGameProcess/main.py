@@ -250,6 +250,12 @@ def display_scores():
     while game_on:
         screen.fill((0, 0, 0))
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_on = False
+            if event.type == pygame.KEYDOWN:
+                game_on = False
+
         text_font_1 = pygame.font.Font("freesansbold.ttf", 32)
         text_1 = text_font_1.render("TOP SCORES", True, (255, 255, 255))
         text_1_rect = text_1.get_rect()
@@ -260,15 +266,15 @@ def display_scores():
         for i, score in enumerate(scores_cursor):
             if i == 10:
                 break
-            name = scores_font.render(score["username"], True, (255, 255, 255))
+            name = scores_font.render(str(i+1) + ".   " + score["username"], True, (255, 255, 255))
             s = scores_font.render(str(score["score"]), True, (255, 255, 255))
             name_rect = name.get_rect()
             score_rect = s.get_rect()
-            heigt = (size[1] - 64)/10*i + 64
+            heigt = (size[1] - 128)/10*i + 128
             name_rect.top = heigt
             score_rect.top = heigt
-            name_rect.left = 64
-            score_rect.right = 64
+            name_rect.left = 128
+            score_rect.right = size[0] - 128
             screen.blit(name, name_rect)
             screen.blit(s, score_rect)
 
@@ -318,3 +324,4 @@ else:
         display_scores()
 
 game_outro()
+
