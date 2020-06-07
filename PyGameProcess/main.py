@@ -47,7 +47,7 @@ def get_name():
         screen.fill((0, 0, 0))
 
         text_font_1 = pygame.font.Font("freesansbold.ttf", 32)
-        text_1 = text_font_1.render("What do you want to be remembered by?", True, (255, 255, 255))
+        text_1 = text_font_1.render("Your name, my grace?", True, (255, 255, 255))
         text_1_rect = text_1.get_rect()
         text_1_rect.center = (size[0] / 2, size[1] / 2 - 80)
 
