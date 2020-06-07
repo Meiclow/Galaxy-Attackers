@@ -12,8 +12,6 @@ highscores_col = db["highscores"]
 title = "Galaxy Attackers"
 title_up = "GALAXY ATTACKERS"
 
-name = enterbox("Enter nick:", title)
-
 pygame.init()
 size = (1200, 900)
 screen = pygame.display.set_mode(size)
@@ -25,6 +23,31 @@ player_position = Position(game_map.player_rect.centerx, game_map.player_rect.ce
 player = Player.spawn(player_position, model)
 game_map.set_player(player)
 clock = pygame.time.Clock()
+
+
+def get_name():
+    name_input = ""
+    font = pygame.font.Font(None, 50)
+    while True:
+        for evt in pygame.event.get():
+            if evt.type == pygame.KEYDOWN:
+                if evt.unicode.isalpha():
+                    name_input += evt.unicode
+                elif evt.key == pygame.K_BACKSPACE:
+                    name_input = name_input[:-1]
+                elif evt.key == pygame.K_RETURN:
+                    return name_input
+            elif evt.type == pygame.QUIT:
+                return name_input
+        screen.fill((0, 0, 0))
+        block = font.render(name_input, True, (255, 255, 255))
+        rect = block.get_rect()
+        rect.center = screen.get_rect().center
+        screen.blit(block, rect)
+        pygame.display.flip()
+
+
+name = get_name()
 
 
 def reset(current_map):
