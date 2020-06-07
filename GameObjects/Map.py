@@ -61,7 +61,7 @@ class Map:
         self.score = score
 
     def ascend(self):
-        new_score = self.score + ((100 * self.difficulty) * (10 + 3 * self.player.hp))
+        new_score = self.score + ((100 * (self.difficulty+1)) * (10 + 3 * self.player.hp))
         new_map = Map(self.screen, True, self.difficulty + 1, self.player_model, new_score)
         self.__dict__.update(new_map.__dict__)
 
@@ -161,7 +161,10 @@ class Map:
 
     def show_score(self):
         font = pygame.font.Font('freesansbold.ttf', 20)
-        score = font.render(" level: " + str(self.difficulty), True, (255, 255, 255))
+        if self.is_endless:
+            score = font.render(" level: " + str(self.difficulty) + "  score: " + str(self.score), True, (255, 255, 255))
+        else:
+            score = font.render(" level: " + str(self.difficulty), True, (255, 255, 255))
         score_rect = score.get_rect()
         score_rect.center = (self.x/2, self.score_size/2)
         self.screen.blit(score, score_rect)

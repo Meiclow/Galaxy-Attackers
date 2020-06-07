@@ -151,7 +151,11 @@ def level_over(text):
                     game_on = False
                 intro = False
         text_font_1 = pygame.font.Font("freesansbold.ttf", 64)
-        text_1 = text_font_1.render(text + "level " + str(game_map.difficulty), True, (255, 255, 255))
+        if game_map.is_endless:
+            text_1 = text_font_1.render(text + "level " + str(game_map.difficulty)+"  score: " + str(game_map.score),
+                                        True, (255, 255, 255))
+        else:
+            text_1 = text_font_1.render(text + "level " + str(game_map.difficulty), True, (255, 255, 255))
         text_1_rect = text_1.get_rect()
         text_1_rect.center = (size[0] / 2, size[1] / 2 - 40)
         text_font_2 = pygame.font.Font("freesansbold.ttf", 32)
