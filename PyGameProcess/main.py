@@ -266,15 +266,15 @@ def display_scores():
         for i, score in enumerate(scores_cursor):
             if i == 10:
                 break
-            name = scores_font.render(score["username"], True, (255, 255, 255))
+            name = scores_font.render(str(i+1) + ".   " + score["username"], True, (255, 255, 255))
             s = scores_font.render(str(score["score"]), True, (255, 255, 255))
             name_rect = name.get_rect()
             score_rect = s.get_rect()
             heigt = (size[1] - 128)/10*i + 128
             name_rect.top = heigt
             score_rect.top = heigt
-            name_rect.left = 64
-            score_rect.right = size[0] - 64
+            name_rect.left = 128
+            score_rect.right = size[0] - 128
             screen.blit(name, name_rect)
             screen.blit(s, score_rect)
 
