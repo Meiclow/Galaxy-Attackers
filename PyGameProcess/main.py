@@ -243,6 +243,8 @@ def game():
         pygame.display.update()
     return win
 
+
+
 def display_scores():
     global game_on
     while game_on:
@@ -259,7 +261,7 @@ def display_scores():
             if i == 10:
                 break
             name = scores_font.render(score["username"], True, (255, 255, 255))
-            s = scores_font.render(score["score"], True, (255, 255, 255))
+            s = scores_font.render(str(score["score"]), True, (255, 255, 255))
             name_rect = name.get_rect()
             score_rect = s.get_rect()
             heigt = (size[1] - 64)/10*i + 64
@@ -275,8 +277,11 @@ def display_scores():
 
 
 
+
+
 # START OF THE GAME CODE
 game_on = True
+display_scores()
 game_intro()
 game_map.is_endless = menu()
 pygame.display.set_mode(size, pygame.FULLSCREEN)
