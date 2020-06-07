@@ -1,8 +1,13 @@
 import pygame
+import pymongo
 
 from GameObjects.Position import Position
 from GameObjects.Player import Player
 from GameObjects.Map import Map
+
+client = pymongo.MongoClient("mongodb://localhost:27017")
+db = client["galaxy-attackers"]
+movies_col = db["movies"]
 
 pygame.init()
 size = (1200, 900)
