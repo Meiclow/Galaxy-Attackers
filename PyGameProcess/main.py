@@ -26,9 +26,10 @@ clock = pygame.time.Clock()
 
 
 def get_name():
+    global game_on
     name_input = ""
     font = pygame.font.Font(None, 50)
-    while True:
+    while True and game_on:
         for evt in pygame.event.get():
             if evt.type == pygame.KEYDOWN:
                 if evt.unicode.isalpha():
@@ -37,17 +38,26 @@ def get_name():
                     name_input = name_input[:-1]
                 elif evt.key == pygame.K_RETURN:
                     return name_input
+                elif evt.key == pygame.K_ESCAPE:
+                    game_on = False
+                    return name_input
             elif evt.type == pygame.QUIT:
+                game_on = False
                 return name_input
         screen.fill((0, 0, 0))
+
+        text_font_1 = pygame.font.Font("freesansbold.ttf", 32)
+        text_1 = text_font_1.render("What do you want to be remembered by?", True, (255, 255, 255))
+        text_1_rect = text_1.get_rect()
+        text_1_rect.center = (size[0] / 2, size[1] / 2 - 80)
+
         block = font.render(name_input, True, (255, 255, 255))
         rect = block.get_rect()
         rect.center = screen.get_rect().center
         screen.blit(block, rect)
+
+        screen.blit(text_1, text_1_rect)
         pygame.display.flip()
-
-
-name = get_name()
 
 
 def add_score(score):
@@ -182,11 +192,7 @@ def level_over(text):
                     game_on = False
                 intro = False
         text_font_1 = pygame.font.Font("freesansbold.ttf", 64)
-        if game_map.is_endless:
-            text_1 = text_font_1.render(text + "level " + str(game_map.difficulty)+"  score: " + str(game_map.score),
-                                        True, (255, 255, 255))
-        else:
-            text_1 = text_font_1.render(text + "level " + str(game_map.difficulty), True, (255, 255, 255))
+        text_1 = text_font_1.render(text + "level " + str(game_map.difficulty), True, (255, 255, 255))
         text_1_rect = text_1.get_rect()
         text_1_rect.center = (size[0] / 2, size[1] / 2 - 40)
         text_font_2 = pygame.font.Font("freesansbold.ttf", 32)
@@ -267,9 +273,10 @@ else:
         endless_win = game()
         if game_on:
             if endless_win:
-                level_over("You won ")
                 game_map.ascend()
+                level_over("You won ")
             else:
                 level_over("You lost on endless ")
+                name = get_name()
 
 game_outro()
