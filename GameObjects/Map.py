@@ -61,7 +61,7 @@ class Map:
         self.score = score
 
     def ascend(self):
-        new_score = self.score + ((100 * (self.difficulty+1)) * (10 + 3 * self.player.hp))
+        new_score = self.score + ((10 * (self.difficulty+1)) * (1 + 3 * self.player.hp))
         new_map = Map(self.screen, True, self.difficulty + 1, self.player_model, new_score)
         self.__dict__.update(new_map.__dict__)
 

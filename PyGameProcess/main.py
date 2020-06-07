@@ -50,6 +50,14 @@ def get_name():
 name = get_name()
 
 
+def add_score(score):
+    highscores_col.insert_one({"username": name, "score": score})
+
+
+def get_top_ten():
+    return highscores_col.find_many({}, sort=[("score", pymongo.DESCENDING)])
+
+
 def reset(current_map):
     new_map = Map(current_map.screen, False, current_map.difficulty, model, 0)
     new_map.set_player(Player.spawn(player_position, model))
