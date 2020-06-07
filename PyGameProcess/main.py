@@ -227,9 +227,9 @@ else:
         endless_win = game()
         if game_on:
             if endless_win:
+                level_over("You won ")
                 game_map.ascend()
             else:
                 level_over("You lost on endless ")
-
 
 game_outro()

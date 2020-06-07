@@ -60,8 +60,8 @@ class Map:
         self.init_mobs()
 
     def ascend(self):
-        newMap = Map(self.screen, True, self.difficulty + 1, self.player_model)
-        self.__dict__.update(newMap.__dict__)
+        new_map = Map(self.screen, True, self.difficulty + 1, self.player_model)
+        self.__dict__.update(new_map.__dict__)
 
     def init_barriers(self):
         for i in range(1, 8):
